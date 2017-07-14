@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      naver map
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+      <ion-input type="text" placeholder="Search" [(ngModel)]="search"></ion-input>
+      <button ion-button item-right color="secondary" (click)="searchmap()">Search</button>
+  </ion-item>
+  <button ion-button type="button" (click)="find_road()">find load</button>
+  <button ion-button type="button" (click)="delete_marker()">delete marker</button>
+  <div id="map" style="width:100%;height:100%;"></div>
+</ion-content>
