@@ -1,0 +1,50 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>
+      Account
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>Follow us on Twitter</ion-list-header>
+    <ion-item>
+      <ion-icon name="ionic" item-left></ion-icon>
+      @ionicframework
+    </ion-item>
+  </ion-list>
+</ion-content>
+ -->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Account
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div>
+      <div class="list list-inset">
+          <label class="item item-input">
+              <input ng-model="username" type="text" placeholder="E-mail" />
+          </label>
+          <label class="item item-input">
+              <input ng-model="password" type="password" placeholder="Password" />
+          </label>
+      </div>
+      <div class="padding-left padding-right">
+          <div class="button-bar">
+              <a class="button" ng-click="login(username, password)">Login</a>
+              <a class="button" ng-click="register(username, password)">Register</a>
+          </div>
+          <div class="button-bar" style="margin-top:10px">
+              <a class="button" ng-click="resetPassword(username)">Forgot Password</a>
+              <a class="button" ng-click="deactivate(username, password)">Deactivate</a>
+          </div>
+      </div>
+  </div>
+  <hr>
+</ion-content>
