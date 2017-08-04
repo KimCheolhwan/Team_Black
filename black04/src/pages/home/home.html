@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      map test
+    </ion-title>
+  </ion-navbar>
+  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>  
+</ion-header>
+
+<ion-content  onload="init()" padding>
+  <div id="find_div">
+   <ion-item>
+    <ion-input type="text" id="starttext" placeholder="Search For Address" [(ngModel)]="start"></ion-input>
+    <button item-right ion-button id="startS" (click)="searchPlace(start)" color="secondary">
+      R
+    </button>
+    <ion-input type="text" id="endtext" placeholder="Search For Address" [(ngModel)]="end"></ion-input>
+    <button item-right ion-button id="endS" (click)="searchPlace(end)" color="secondary">
+      R
+    </button>
+    <button item-right ion-button id="searchRoute" (click)="searchRoute()" color="secondary">
+      serach
+    </button>
+    <button item-right ion-button (click)="tt()" color="secondary">
+      go
+    </button>
+   </ion-item>
+  </div>
+  <div id="map_div">
+  </div>
+  <div id="list">
+  </div>
+</ion-content>
