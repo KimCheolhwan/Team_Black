@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
+import { Media } from '@ionic-native/media';
 
 
 import { MyApp } from './app.component';
@@ -32,7 +33,8 @@ import { UsersProvider } from '../providers/users/users';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UsersProvider
+    UsersProvider,
+    Media
   ]
 })
 export class AppModule {}

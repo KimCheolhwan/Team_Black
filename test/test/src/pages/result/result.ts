@@ -1,7 +1,10 @@
 import { ElementRef,Component } from '@angular/core';
 import { NavController, NavParams,ViewController,AlertController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users'
+import { Media, MediaObject } from '@ionic-native/media';
+
 import * as $ from 'jquery';
+
 
 /**
  * Generated class for the ResultPage page.
@@ -9,13 +12,14 @@ import * as $ from 'jquery';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var map,icon,marker,startX,startY,endX,endY,routeLayer,tdata,loadInfo,startName,endName,pr_3857,pr_4326,id,first=0,loadInfoIndex=1;
+var map,icon,marker,startX,startY,endX,endY,routeLayer,tdata,loadInfo,startName,endName,pr_3857,pr_4326,index=0,loadInfoIndex=0;
 var markers = new Tmap.Layer.Markers('MarkerLayer');
 var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png',size,offset);
 var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
 var mapW, mapH;     // 지도의 가로, 세로 크기(Pixel단위) 를 지정 합니다.
 var cLonLat, zoom;      //중심 좌표와 지도레벨을 정의 합니다.
 declare var Tmap;
+var description:Array<string> = [];
 var size = new Tmap.Size(21,25);
 var offset = new Tmap.Pixel(-(size.w/2), -size.h);
 var list: Object[]=[];
@@ -30,7 +34,9 @@ var geo_options = {
 export class ResultPage {
   users: any;
   destination : string='';
-  constructor(public elRef:ElementRef,public viewCtrl: ViewController,public userService: UsersProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,) {
+  track : any;
+
+  constructor(private media: Media,public elRef:ElementRef,public viewCtrl: ViewController,public userService: UsersProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,) {
 
   }
 
@@ -98,6 +104,7 @@ export class ResultPage {
             $(".lists").append(`<li><button id='${list.length}'>${name}</button></li>`);
             //리스트 선택시
             document.getElementById(`${list.length}`).addEventListener("click",function(e){
+              description=[]; //description 초기화
               var index = $(this).attr('id');
               map.setCenter(list[index].lonlat,15);
               marker = new Tmap.Marker(list[index].lonlat,icon);
@@ -146,74 +153,71 @@ export class ResultPage {
                 },
                 complete: function(data) {
                     loadInfo = data.responseJSON.features;
-                      // for(var i in loadInfo){
-                      //   console.log(loadInfo[i].geometry.coordinates);
-                      // }
+                      for(var i in loadInfo){
+                        description.push(loadInfo[i].properties.description);
+                      }
                   }
               });
             });
             list.push(options);
         });
+
       }else {
           alert('검색결과가 없습니다.');
       }
     }
     navigate(){
+      index=0;
       map.addLayer(routeLayer);
       map.setCenter( new Tmap.LonLat(startX, startY),15);
-      id = navigator.geolocation.watchPosition(this.success, this.geo_error, geo_options);
+
+      // this.userService.pushDescription(description).then((data)=>{
+      //   console.log('description push complete' );
+      //
+      // });
+
+
+      // id = navigator.geolocation.watchPosition(this.success, this.geo_error, geo_options);
+      this.userService.getTTS().then((data)=>{
+
+
+      });
+
 
     }
-
-    success(position){
-      var message = {
-          message:'하하하'
-        }
-        console.log('userService start');
-        this.userService.getCSS(message).then((data)=>{
-          console.log('end');
-        });
-      console.log('fuck');
-      var lonlat = new Tmap.LonLat(position.coords.longitude,position.coords.latitude).transform(pr_4326,pr_3857);
-      startX = lonlat.lon;
-      startY = lonlat.lat;
-      console.log(startX +','+ startY);
-
-
-      // if(typeof(loadInfo[loadInfoIndex].geometry.coordinates[0])==='number'){
-      //   var message = {
-      //     message:this.destination
-      //   }
-      //   if(first===0){
-      //     this.userService.getCSS(message).then(function(data){
-      //
-      //     })
-      //     first++;
-      //   }
-      //   if(startX===loadInfo[loadInfoIndex].geometry.coordinates[0] && startY === loadInfo[loadInfoIndex].geometry.coordinates[1]){
-      //     this.userService.getCSS(message).then(function(data){
-      //
-      //     })
-      //     loadInfoIndex++;
-      //   }
-      // }else{
-      //   if(first===0){
-      //     this.userService.getCSS(message).then(function(data){
-      //
-      //     })
-      //     first++;
-      //   }
-      //   if(startX === loadInfo[loadInfoIndex].geometry.coordinates[1][0] && startY ===loadInfo[loadInfoIndex].geometry.coordinates[1][1]){
-      //     this.userService.getCSS(message).then(function(data){
-      //
-      //     })
-      //     loadInfoIndex++;
-      //   }
-      //
-      // }
+    test(){
+      console.log('getTTS result:' + index);
+      var file : MediaObject= this.media.create('./test.mp3');
+      file.play();
     }
-    geo_error() {
-      alert("위치 정보를 사용할 수 없습니다.");
-    }
+    // success(position){
+    //   var lonlat = new Tmap.LonLat(position.coords.longitude,position.coords.latitude).transform(pr_4326,pr_3857);
+    //   startX = Math.floor(lonlat.lon);
+    //   startY = Math.floor(lonlat.lat);
+    //
+    //   if(typeof(loadInfo[loadInfoIndex].geometry.coordinates[0])==='number'){
+    //
+    //     if(startX===loadInfo[loadInfoIndex].geometry.coordinates[0] && startY === loadInfo[loadInfoIndex].geometry.coordinates[1]){
+    //       this.userService.getTTS().then((data)=>{
+    //         console.log('getTTS result:' + index);
+    //         $('#audio').attr('src','C:/test/server/audio/test.mp3');
+    //         index++;
+    //       });
+    //       loadInfoIndex++;
+    //     }
+    //   }else{
+    //     if(startX === loadInfo[loadInfoIndex].geometry.coordinates[2][0] && startY ===loadInfo[loadInfoIndex].geometry.coordinates[2][1]){
+    //       this.userService.getTTS().then((data)=>{
+    //         console.log('getTTS result:' + index);
+    //         $('#audio').attr('src','C:/test/server/audio/tts'+index+'.mp3');
+    //         index++;
+    //       });
+    //       loadInfoIndex++;
+    //     }
+    //   }
+    // }
+    // geo_error() {
+    //   alert("위치 정보를 사용할 수 없습니다.");
+    // }
 
 }

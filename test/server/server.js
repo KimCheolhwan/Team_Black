@@ -5,7 +5,9 @@ var morgan = require('morgan');             // log requests to the console (expr
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var cors = require('cors');
-// var request = require('request');
+var request = require('request');
+var fs = require('fs');
+
 
 
 //보안 세션
@@ -33,15 +35,17 @@ app.use(function(req, res, next) {
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    next();
 });
-app.use(session({
-   secret: '1234DSFs@adsdfqwff1234!@#$asd',
-   resave: false,
-   saveUninitialized: true,
-   store: new MongoStore({mongooseConnection: mongoose.connection,
-                          ttl : 2 * 24 * 60 * 60})
-}));
+// app.use(session({
+//    secret: '1234DSFs@adsdfqwff1234!@#$asd',
+//    resave: false,
+//    saveUninitialized: true,
+//    store: new MongoStore({mongooseConnection: mongoose.connection,
+//                           ttl : 2 * 24 * 60 * 60})
+// }));
 // mongoose.connect('mongodb://127.0.0.1/test');
-
+var description=[];
+var index = 0;
+var audio_length=0;
 var UserSchema = mongoose.Schema({
   id: String,
   password: String,
@@ -102,21 +106,33 @@ app.post('/api/login',function(req,res){
     });
 });
 
-
-app.post('/tts',function(req,res){
-  console.log('/api/css:'+req.body.message);
-  var api_url = 'https://openapi.naver.com/v1/voice/tts.bin';
-  var request = require('request');
-  var options = {
-        url: api_url,
-        form: {'speaker':'mijin', 'speed':'0', 'text':'안녕하세요'},
-        headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
-      };
-    var _req = request.post(options).on('response', function(response) {
-           console.log(response.statusCode); // 200
-           console.log(response.headers['content-type']);
-        });
-    _req.pipe(res);
+// app.post('/api/description', function(res,req){
+//   if(audio_length!=0){
+//     for(var i=0;i<audio_length;i++){
+//       fs.unlink('C:/test/server/audio/tts'+i+'.mp3');
+//     }
+//   }
+//   description=[];
+//   description=req.req.body;
+//   for(var j=0; j<description.length;j++){
+//     var api_url = 'https://openapi.naver.com/v1/voice/tts.bin';
+//     var request = require('request');
+//     var options = {
+//           url: api_url,
+//           form: {'speaker':'mijin', 'speed':'0', 'text':description[j]},
+//           headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
+//         };
+//
+//         var writeStream = fs.createWriteStream('./audio/tts'+j+'.mp3');
+//         var _req = request.post(options).on('response', function(response) {
+//           });
+//         _req.pipe(writeStream); // file로 출력
+//   }
+//   audio_length=description.length;
+// });
+app.get('/api/tts',function(req,res){
+  res.json(index);
+  index++;
 });
 
 app.listen(8080);

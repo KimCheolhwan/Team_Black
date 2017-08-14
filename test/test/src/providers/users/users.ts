@@ -37,18 +37,26 @@ export class UsersProvider {
                   });
                 });
     }
-    getCSS(message){
+    pushDescription(description){
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       return  new Promise(resolve => {
-        this.http.post('http://localhost:8080/tts',JSON.stringify(message),{headers: headers})
+        this.http.post('http://localhost:8080/api/description',JSON.stringify(description),{headers: headers})
                   .subscribe(data=>{
-                    console.log('user.ts');
                     resolve(data);
                   });
                 });
     }
-
+    getTTS(){
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      return  new Promise(resolve => {
+        this.http.get('http://localhost:8080/api/tts',{headers: headers})
+                  .subscribe(data=>{
+                    resolve(data);
+                  });
+                });
+    }
     // getUserInfo(){
     //   let headers = new Headers();
     //   headers.append('Content-Type', 'application/json');
