@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- 4.3.0
+- stable
+deploy:
+  provider: npm
+  email: npm@lossless.digital
+  api_key:
+    secure: kaJ+tJfby2hxCBGM90/K3+3yNZKzMDzuanDFiOQr/SZMDpvWxDLh56Er9VH4TcU7m9c2N2bkqEXQtMUN4h5awB7aHSJFhSokZNKPJFr/NKrsJSsNVnXUH3x5peXCnLyX6t/gm/kNoJ1UO9jjQDW38nmyyeagQZHDt98quTJ/IGVPLMDRpyu98Fwj+2Q7OOXi3tl4lVhKHjL7rk+cD+hzNFKYjf4cSq0rfcCGSYCqfZpuyyIJJUZNwR3Xti/nktMTE0OSBTDWaDqMzRlrZCdIx1Dy+3wYbQyNg1JLwj47WGuzJl0VakS0VPoW8OGP4javz0StnJcm8B28CNs6OA9nuU4W8QAzjkjvNK8DaPj6jGBcxmEnQhvoks9+4jqyZ/nKdDGoHiaa4wlSwA3Ey2sAnE/L0YVYlEblzwqgw5y+jEKf+tMm4vw9qokdMXtq8q2pP5h2S0ONE2Ipep1EsHe3EI6P4I1u6V7ShNpikk4AWb49CDHz7JNgcoRd1yxxK+e1fu+HqPRFGDY4UI1YIiC2aygaaCG5mPl51/0lqyNFyG8E+jbo+ZhB1TysTu57wcg16PCBUgvtnXbSHhV3DwZ5uL4RAKYi7bmdHhv4PIEhgAyLU8rGUemVnoX4tylc+ysQ3otzCUa0cGY99VYGdO2iJA3P3TYIC7OQdIa+QwC8AQU=
+  on:
+    tags: true
+    repo: PlayControl/playcontrol-player

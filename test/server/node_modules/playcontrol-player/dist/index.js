@@ -1,0 +1,15 @@
+"use strict";
+/// <reference path="typings/tsd.d.ts" />
+/// <reference path="./playcontrol.player.classes.ts" />
+/// <reference path="./playcontrol.player.audiofile.ts" />
+/// <reference path="./playcontrol.player.cli.ts" />
+console.log("starting player module..."); //logging start to console
+var plugins = PlayControlPlayerPlugins.init(); //load depedencies to plugins object
+var PlayControlPlayer = {
+    new: function () {
+        return new Player();
+    }
+};
+module.exports = PlayControlPlayer;
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSx5Q0FBeUM7QUFDekMsd0RBQXdEO0FBQ3hELDBEQUEwRDtBQUMxRCxvREFBb0Q7QUFDcEQsT0FBTyxDQUFDLEdBQUcsQ0FBQywyQkFBMkIsQ0FBQyxDQUFDLENBQUMsMEJBQTBCO0FBRXBFLElBQUksT0FBTyxHQUFHLHdCQUF3QixDQUFDLElBQUksRUFBRSxDQUFDLENBQUMsb0NBQW9DO0FBQ25GLElBQUksaUJBQWlCLEdBQUc7SUFDcEIsR0FBRyxFQUFDO1FBQ0EsTUFBTSxDQUFDLElBQUksTUFBTSxFQUFFLENBQUM7SUFDeEIsQ0FBQztDQUNKLENBQUM7QUFFRixNQUFNLENBQUMsT0FBTyxHQUFHLGlCQUFpQixDQUFDIiwiZmlsZSI6ImluZGV4LmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8vIDxyZWZlcmVuY2UgcGF0aD1cInR5cGluZ3MvdHNkLmQudHNcIiAvPlxuLy8vIDxyZWZlcmVuY2UgcGF0aD1cIi4vcGxheWNvbnRyb2wucGxheWVyLmNsYXNzZXMudHNcIiAvPlxuLy8vIDxyZWZlcmVuY2UgcGF0aD1cIi4vcGxheWNvbnRyb2wucGxheWVyLmF1ZGlvZmlsZS50c1wiIC8+XG4vLy8gPHJlZmVyZW5jZSBwYXRoPVwiLi9wbGF5Y29udHJvbC5wbGF5ZXIuY2xpLnRzXCIgLz5cbmNvbnNvbGUubG9nKFwic3RhcnRpbmcgcGxheWVyIG1vZHVsZS4uLlwiKTsgLy9sb2dnaW5nIHN0YXJ0IHRvIGNvbnNvbGVcbmltcG9ydCBwbHVnaW5zID0gcmVxdWlyZShcIi4vcGxheWNvbnRyb2wucGxheWVyLnBsdWdpbnNcIik7XG52YXIgcGx1Z2lucyA9IFBsYXlDb250cm9sUGxheWVyUGx1Z2lucy5pbml0KCk7IC8vbG9hZCBkZXBlZGVuY2llcyB0byBwbHVnaW5zIG9iamVjdFxudmFyIFBsYXlDb250cm9sUGxheWVyID0ge1xuICAgIG5ldzpmdW5jdGlvbigpe1xuICAgICAgICByZXR1cm4gbmV3IFBsYXllcigpO1xuICAgIH1cbn07XG5cbm1vZHVsZS5leHBvcnRzID0gUGxheUNvbnRyb2xQbGF5ZXI7XG4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=

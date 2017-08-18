@@ -1,28 +1,21 @@
-import { ElementRef,Component } from '@angular/core';
+import { ElementRef,Component,ViewChild } from '@angular/core';
 import { NavController, NavParams,ViewController,AlertController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users'
-import { Media, MediaObject } from '@ionic-native/media';
-
 import * as $ from 'jquery';
 
-
-/**
- * Generated class for the ResultPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-var map,icon,marker,startX,startY,endX,endY,routeLayer,tdata,loadInfo,startName,endName,pr_3857,pr_4326,index=0,loadInfoIndex=0;
+var map,marker,startX,startY,endX,endY,routeLayer,tdata,id,loadInfo,startName,endName,pr_3857,pr_4326,index=0,loadInfoIndex=1;
 var markers = new Tmap.Layer.Markers('MarkerLayer');
-var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png',size,offset);
+var size = new Tmap.Size(21,25);
+var offset = new Tmap.Pixel(-(size.w/2), -size.h);
+ var icon = new Tmap.Icon('https://developers.skplanetx.com/upload/tmap/marker/pin_b_m_a.png',size,offset);
 var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
 var mapW, mapH;     // 지도의 가로, 세로 크기(Pixel단위) 를 지정 합니다.
 var cLonLat, zoom;      //중심 좌표와 지도레벨을 정의 합니다.
 declare var Tmap;
 var description:Array<string> = [];
-var size = new Tmap.Size(21,25);
-var offset = new Tmap.Pixel(-(size.w/2), -size.h);
 var list: Object[]=[];
+// let audio: HTMLElement = document.getElementById('#audio')
+var audio = new Audio();
 var geo_options = {
   enableHighAccuracy: true,
   maximumAge        : 30000
@@ -31,19 +24,20 @@ var geo_options = {
   selector: 'page-result',
   templateUrl: 'result.html',
 })
+
 export class ResultPage {
+  @ViewChild("audio") audio;
   users: any;
   destination : string='';
-  track : any;
 
-  constructor(private media: Media,public elRef:ElementRef,public viewCtrl: ViewController,public userService: UsersProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,) {
-
+  constructor(public elRef:ElementRef,public viewCtrl: ViewController,public userService: UsersProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,) {
   }
 
   ionViewDidLoad() {
       this.init();
       this.getGeolocation();
   }
+
   setVariables(){
    cLonLat = new Tmap.LonLat(14135912.880612050, 4518334.160091842);
                    //중심점 좌표 입니다. EPSG3857 좌표계 형식 입니다.
@@ -112,7 +106,6 @@ export class ResultPage {
 
               if(routeLayer)
                 map.removeLayer(routeLayer);
-              var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
               endX = list[index].lonlat.lon;
               endY = list[index].lonlat.lat;
               startName = '출발지';
@@ -173,51 +166,40 @@ export class ResultPage {
 
       // this.userService.pushDescription(description).then((data)=>{
       //   console.log('description push complete' );
-      //
       // });
-
-
-      // id = navigator.geolocation.watchPosition(this.success, this.geo_error, geo_options);
-      this.userService.getTTS().then((data)=>{
-
-
-      });
-
-
+      id = navigator.geolocation.watchPosition(this.success, this.geo_error, geo_options);
+      this.speak();
     }
-    test(){
-      console.log('getTTS result:' + index);
-      var file : MediaObject= this.media.create('./test.mp3');
-      file.play();
-    }
-    // success(position){
-    //   var lonlat = new Tmap.LonLat(position.coords.longitude,position.coords.latitude).transform(pr_4326,pr_3857);
-    //   startX = Math.floor(lonlat.lon);
-    //   startY = Math.floor(lonlat.lat);
-    //
-    //   if(typeof(loadInfo[loadInfoIndex].geometry.coordinates[0])==='number'){
-    //
-    //     if(startX===loadInfo[loadInfoIndex].geometry.coordinates[0] && startY === loadInfo[loadInfoIndex].geometry.coordinates[1]){
-    //       this.userService.getTTS().then((data)=>{
-    //         console.log('getTTS result:' + index);
-    //         $('#audio').attr('src','C:/test/server/audio/test.mp3');
-    //         index++;
-    //       });
-    //       loadInfoIndex++;
-    //     }
-    //   }else{
-    //     if(startX === loadInfo[loadInfoIndex].geometry.coordinates[2][0] && startY ===loadInfo[loadInfoIndex].geometry.coordinates[2][1]){
-    //       this.userService.getTTS().then((data)=>{
-    //         console.log('getTTS result:' + index);
-    //         $('#audio').attr('src','C:/test/server/audio/tts'+index+'.mp3');
-    //         index++;
-    //       });
-    //       loadInfoIndex++;
-    //     }
-    //   }
-    // }
-    // geo_error() {
-    //   alert("위치 정보를 사용할 수 없습니다.");
-    // }
 
+    success(position){
+      var lonlat = new Tmap.LonLat(position.coords.longitude,position.coords.latitude).transform(pr_4326,pr_3857);
+      startX = Math.floor(lonlat.lon);
+      startY = Math.floor(lonlat.lat);
+      console.log('success()');
+
+      if(typeof(loadInfo[loadInfoIndex].geometry.coordinates[0])==='number'){
+        if(startX===loadInfo[loadInfoIndex].geometry.coordinates[0] && startY === loadInfo[loadInfoIndex].geometry.coordinates[1]){
+          this.speak();
+          loadInfoIndex++;
+        }
+      }else{
+        if(startX === loadInfo[loadInfoIndex].geometry.coordinates[2][0] && startY ===loadInfo[loadInfoIndex].geometry.coordinates[2][1]){
+          this.speak();
+          loadInfoIndex++;
+        }
+      }
+    }
+
+    geo_error() {
+      alert("위치 정보를 사용할 수 없습니다.");
+    }
+
+    speak(){
+      // this.userService.getTTS();
+      audio.src = "assets/audio/tts" + index + '.mp3';
+      console.log(audio.src);
+      audio.load();
+      audio.play();
+      index++;
+    }
 }

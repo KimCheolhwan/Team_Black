@@ -7,6 +7,11 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 var cors = require('cors');
 var request = require('request');
 var fs = require('fs');
+var Afplay = require('afplay');
+
+
+
+// var Player = require('player');
 
 
 
@@ -106,33 +111,42 @@ app.post('/api/login',function(req,res){
     });
 });
 
-// app.post('/api/description', function(res,req){
-//   if(audio_length!=0){
-//     for(var i=0;i<audio_length;i++){
-//       fs.unlink('C:/test/server/audio/tts'+i+'.mp3');
-//     }
-//   }
-//   description=[];
-//   description=req.req.body;
-//   for(var j=0; j<description.length;j++){
-//     var api_url = 'https://openapi.naver.com/v1/voice/tts.bin';
-//     var request = require('request');
-//     var options = {
-//           url: api_url,
-//           form: {'speaker':'mijin', 'speed':'0', 'text':description[j]},
-//           headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
-//         };
-//
-//         var writeStream = fs.createWriteStream('./audio/tts'+j+'.mp3');
-//         var _req = request.post(options).on('response', function(response) {
-//           });
-//         _req.pipe(writeStream); // file로 출력
-//   }
-//   audio_length=description.length;
-// });
+app.post('/api/description', function(res,req){
+  var list = fs.readdirSync('../test/src/assets/audio');
+  for(var i=0; i<list.length;i++){
+    fs.unlinkSync('./audio/tts'+i+'.mp3');
+  }
+  console.log(list.length);
+  description=req.req.body;
+  for(var j=0; j<description.length;j++){
+    var api_url = 'https://openapi.naver.com/v1/voice/tts.bin';
+    var request = require('request');
+    var options = {
+          url: api_url,
+          form: {'speaker':'mijin', 'speed':'0', 'text':description[j]},
+          headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
+        };
+
+        var writeStream = fs.createWriteStream('../test/src/assets/audio/tts'+j+'.mp3');
+        var _req = request.post(options).on('response', function(response) {
+          });
+        _req.pipe(writeStream); // file로 출력
+      }
+});
+
 app.get('/api/tts',function(req,res){
-  res.json(index);
-  index++;
+
+
+
+  // var player = new Afplay();
+  // player.play('./audio/tts0.mp3');
+
+  // var player = new Player('./audio/tts'+index+'.mp3');
+  // player.play(function(err, player){
+  // console.log('playend!');
+  // index++;
+  // });
+  // res.json(index);
 });
 
 app.listen(8080);

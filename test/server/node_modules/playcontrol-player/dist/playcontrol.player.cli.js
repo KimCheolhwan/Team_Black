@@ -1,0 +1,8 @@
+/// <reference path="./index.ts" />
+var PlayControlPlayerCli;
+(function (PlayControlPlayerCli) {
+    PlayControlPlayerCli.init = function () {
+    };
+})(PlayControlPlayerCli || (PlayControlPlayerCli = {}));
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBsYXljb250cm9sLnBsYXllci5jbGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsbUNBQW1DO0FBQ25DLElBQU8sb0JBQW9CLENBSTFCO0FBSkQsV0FBTyxvQkFBb0IsRUFBQyxDQUFDO0lBQ2QseUJBQUksR0FBRztJQUVsQixDQUFDLENBQUM7QUFDTixDQUFDLEVBSk0sb0JBQW9CLEtBQXBCLG9CQUFvQixRQUkxQiIsImZpbGUiOiJwbGF5Y29udHJvbC5wbGF5ZXIuY2xpLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8vIDxyZWZlcmVuY2UgcGF0aD1cIi4vaW5kZXgudHNcIiAvPlxubW9kdWxlIFBsYXlDb250cm9sUGxheWVyQ2xpIHtcbiAgICBleHBvcnQgdmFyIGluaXQgPSBmdW5jdGlvbigpe1xuXG4gICAgfTtcbn0iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=

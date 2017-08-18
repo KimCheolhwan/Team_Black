@@ -12,7 +12,6 @@ export class HomePage {
     user_password:string='';
     create_user_id:string='';
     create_user_password:string='';
-    create_user_nickname:string='';
     users : any;
 
     constructor(public userService: UsersProvider,public navCtrl: NavController, public alertCtrl: AlertController,) {
@@ -48,8 +47,7 @@ export class HomePage {
     register(){
       let options = {
         id:this.create_user_id,
-        password:this.create_user_password,
-        nickname:this.create_user_nickname
+        password:this.create_user_password
       };
       this.userService.createUserInfo(options).then((data)=>{
         if(data["_body"]==='true'){
