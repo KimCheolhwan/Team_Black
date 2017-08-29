@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>네비게이션!</ion-title>
+    <ion-title>BLACK</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,22 +15,19 @@
 
 <ion-content padding>
   <div class="">
-    <input type="text" name="" value="" [(ngModel)]="destination" placeholder='도착지'>
-    <button ion-button color="danger"  name="button" (click)='find()'>목적지 검색</button>
-    <button ion-button color="danger"  name="button" (click)='navigate()'>시작</button>
-    <button ion-button color="danger"  name="button" (click)='speak()'>test</button>
+
+      <ion-input type="text" name="" value="" [(ngModel)]="destination" placeholder="목적지를 입력해주세요."></ion-input>
+      <button item-right ion-button default="true" color="dark" name="button" (click)='find()'>목적지 검색</button>
+      <button item-right ion-button default="true" color="dark" name="button" (click)='navigate()'>경로 찾기</button>
+      <button item-right ion-button default="true" color="dark" name="button" (click)='success()'>길안내</button>
 
   </div>
 
+<!--  <button ion-button color="danger" (click)='back()'>back</button>
+-->
   <div id="map_div">
   </div>
-  <button ion-button color="danger" (click)='back()'>back</button>
-
-
-  <div class="">
-    <ul class='lists'>
-
-    </ul>
+  <div id="list" style="-ms-overflow-style: none;">
   </div>
 
 </ion-content>

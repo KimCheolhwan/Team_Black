@@ -1,3 +1,25 @@
 page-result {
 
 }
+
+#map_div{
+  position: absolute;
+}
+
+#list {
+  position: absolute;
+  background-color: rgba(255,255,255,1);
+  width:100%;
+  max-height: 400px;
+  overflow-y:auto;
+  height:400px;
+}
+
+#list::-webkit-scrollbar{
+  display:none;
+}
+
+.result{
+  font-size: 15pt;
+  background-color: rgba(255,255,255,1);
+}

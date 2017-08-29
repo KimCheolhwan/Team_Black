@@ -7,12 +7,6 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 var cors = require('cors');
 var request = require('request');
 var fs = require('fs');
-var Afplay = require('afplay');
-
-
-
-// var Player = require('player');
-
 
 
 //보안 세션
@@ -22,11 +16,12 @@ var hasher = bkfd2Password();
 var MongoStore = require('connect-mongo')(session);
 
 //음성인식
-var client_id = 'ysnCnGKWFoVq2v3SVGrw';
-var client_secret = 'MZquXqDIZg';
+//var client_id = 'ysnCnGKWFoVq2v3SVGrw'; //김철환
+var client_id = 'yDIuTKSd_AOmop02nuqs';
+//var client_secret = 'MZquXqDIZg'; //김철환
+var client_secret = '11adVBlANp';
 
-
-// mongoose.connect('mongodb://127.0.0.1/test');
+mongoose.connect('mongodb://127.0.0.1/test');
 // Configuration
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
@@ -40,14 +35,14 @@ app.use(function(req, res, next) {
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    next();
 });
-// app.use(session({
-//    secret: '1234DSFs@adsdfqwff1234!@#$asd',
-//    resave: false,
-//    saveUninitialized: true,
-//    store: new MongoStore({mongooseConnection: mongoose.connection,
-//                           ttl : 2 * 24 * 60 * 60})
-// }));
-// mongoose.connect('mongodb://127.0.0.1/test');
+app.use(session({
+   secret: '1234DSFs@adsdfqwff1234!@#$asd',
+   resave: false,
+   saveUninitialized: true,
+   store: new MongoStore({mongooseConnection: mongoose.connection,
+                          ttl : 2 * 24 * 60 * 60})
+}));
+mongoose.connect('mongodb://127.0.0.1/test');
 var description=[];
 var index = 0;
 var audio_length=0;
@@ -114,7 +109,7 @@ app.post('/api/login',function(req,res){
 app.post('/api/description', function(res,req){
   var list = fs.readdirSync('../test/src/assets/audio');
   for(var i=0; i<list.length;i++){
-    fs.unlinkSync('./audio/tts'+i+'.mp3');
+    fs.unlinkSync('../test/src/assets/audio/tts'+i+'.mp3');
   }
   console.log(list.length);
   description=req.req.body;
@@ -128,6 +123,7 @@ app.post('/api/description', function(res,req){
         };
 
         var writeStream = fs.createWriteStream('../test/src/assets/audio/tts'+j+'.mp3');
+        console.log(j);
         var _req = request.post(options).on('response', function(response) {
           });
         _req.pipe(writeStream); // file로 출력
@@ -136,18 +132,23 @@ app.post('/api/description', function(res,req){
 
 app.get('/api/tts',function(req,res){
 
-
-
-  // var player = new Afplay();
-  // player.play('./audio/tts0.mp3');
-
-  // var player = new Player('./audio/tts'+index+'.mp3');
-  // player.play(function(err, player){
-  // console.log('playend!');
-  // index++;
-  // });
   // res.json(index);
 });
 
 app.listen(8080);
 console.log("App listening on port 8080");
+
+// const http = require('http');
+//
+// const hostname = '127.0.0.1';
+// const port = 3000;
+//
+// const server = http.createServer((req, res) => {
+//   res.statusCode = 200;
+//   res.setHeader('Content-Type', 'text/plain');
+//   res.end('Hello World\n');
+// });
+//
+// server.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });

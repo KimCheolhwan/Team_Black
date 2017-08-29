@@ -27,6 +27,8 @@ export class HomePage {
           password:this.user_password
       };
       this.userService.loginUserInfo(options).then((data)=>{
+        this.user_id = "";
+        this.user_password = "";
         if(data===false){
                   let alert = this.alertCtrl.create({
                     title: 'Oops!',
@@ -65,6 +67,8 @@ export class HomePage {
                   });
                   alert.present();
                 }
+                this.create_user_id = "";
+                this.create_user_password = "";
       },(err)=>{
           console.log('error');
         });
